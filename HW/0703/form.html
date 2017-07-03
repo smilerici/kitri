@@ -1,0 +1,59 @@
+
+<html>
+<head>
+<script type="text/javascript">
+	function a() {
+		var html = "";
+		html += "id : " + f.id.value + "<br>";
+		html += "pwd : " + f.pwd.value + "<br>";
+		html += "name : " + f.name.value + "<br>";
+		html += "email : " + f.email.value + "<br>";
+		var str = "";
+		for (i = 0; i < hobby.length; i++) {
+			if (hobby[i].checked) {
+				str += hobby[i].value + ",";
+			}
+		}
+		html += "취미 : " + str + "<br>";
+		f.grade.options[f.grade.selectedIndex].value + "<br>";
+		str = "";
+		for (i = 0; i < f.type.length; i++) {
+			if (f.type[i].checked) {
+				html += "회원종류 : " + f.type[i].value + "<br>";
+			}
+		}
+		html + =f.msg.value+"<br>";
+		var myDiv = document.getElementById("myDiv");
+		myDiv.innerHTML = html;
+	}
+</script>
+</head>
+<body>
+<h3>회원가입</h3>
+	<form name="f" method="post" action="view.html">
+		id : <input type="text" name="id"><br> pwd : <input
+			type="password" name="pwd"><br> name : <input
+			type="text" name="name"><br> email : <input type="text"
+			name="email"><br> 취미 : <input type="checkbox" name="ch"
+			value="1">운동 <input type="checkbox" name="ch" value="2">영화
+		<input type="checkbox" name="ch" value="3">음악 <input
+			type="checkbox" name="ch" value="4">여행 <input type="checkbox"
+			name="ch" value="5">쇼핑<br> 학년 : <select name="grade">
+			<option value=1>1학년</option>
+			<option value=2>2학년</option>
+			<option value=3>3학년</option>
+			<option value=4>4학년</option>
+		</select><br> 회원 종류 : <input type="radio" name="type" value="p">판매자
+		<input type="radio" name="type" value="o">구매자<br> 가입인사 :
+		<br>
+		<textarea rows="5" cols="30" name="msg">
+</textarea>
+		<br> <input type="button" value="가입" onclick="a()"> <input
+			type="reset" value="취소">
+	</form>
+	<div id="myDiv"></div>
+</body>
+</html>
+<?php 
+
+?>
