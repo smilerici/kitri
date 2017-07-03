@@ -40,5 +40,9 @@ switch ($n){
 	print "회원타입 : ";
 	print ($_POST['type']=="o")?"구매자":"판매자";
 	print "<br>가입인사 : ".$_POST['msg'];
+	session_start();
+	$_SESSION['id']=$_POST['id'];
+	$_SESSION['pwd']=$_POST['pwd'];
 	
 ?>
+<br><a href="loginForm.php">로그인</a>
