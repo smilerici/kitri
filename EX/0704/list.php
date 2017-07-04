@@ -20,6 +20,8 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
 }
 }
 
+
+
 print "<h3>사원 아이디</h3>";
 foreach ($arr as $id){
 	print "<a href=search.php?empid=".$id.">".$id."</a><br>";

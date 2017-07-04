@@ -33,12 +33,30 @@ if($cnt>0){
 			$arr[$key]=$val;
 		}
 	}
+	
+	$mng = array();
+	$sql = "select empid from emp";
+	$result = $conn->query($sql);
+	$cnt = $result->rowCount();
+	if($cnt>=1){
+		while($row = $result->fetch(PDO::FETCH_ASSOC)){
+			$mng[]=$row['empid'];
+			
+		}
+	}
 }
 $conn = null;
 
 ?>
 <html>
 <head>
+<script>
+	function a(){
+		if(f.mng.value == f.empid.value){
+			alert("자기자신이 매니저가 될수는 없습니다.");
+		}
+	}
+</script>
 </head>
 <body>
 <h3><?php print $name;?> 사원 정보</h3>
@@ -56,9 +74,21 @@ foreach($arr as $k=>$v){
 }
 ?>
 </select><br>
-<input type="text" name="mng" value="<?php print $mng;?>"><br>
-<input type="submit" value="edit">
+mng : <select name="mng">
+<?php 
+foreach($mng as $k=>$v){
+	if($k==$deptid){
+		print "<option value=".$k." selected>".$v."</option>";
+	} else {
+		print "<option value=".$k.">".$v."</option>";
+	}
+}
+?>
+</select>
+<br>
+<input type="submit" value="edit" onclick="a()">
 <input type="button" value="delete">
 </form>
 </body>
 </html>
+
