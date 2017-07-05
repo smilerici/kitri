@@ -34,13 +34,15 @@ if($cnt>0){
 		}
 	}
 	
-	$mng = array();
-	$sql = "select empid from emp";
+	$mng2 = array();
+	$sql = "select empid, mng from emp";
 	$result = $conn->query($sql);
 	$cnt = $result->rowCount();
 	if($cnt>=1){
 		while($row = $result->fetch(PDO::FETCH_ASSOC)){
-			$mng[]=$row['empid'];
+			$ids=$row['empid'];
+			$mngg=$row['mng'];
+			$mng2[$ids]=$mngg;
 			
 		}
 	}
@@ -52,9 +54,8 @@ $conn = null;
 <head>
 <script>
 	function a(){
-		if(f.mng.value == f.empid.value){
-			alert("자기자신이 매니저가 될수는 없습니다.");
-		}
+		location.href = "del.php?empid=<?php print $empid;?>";
+			
 	}
 </script>
 </head>
@@ -76,18 +77,23 @@ foreach($arr as $k=>$v){
 </select><br>
 mng : <select name="mng">
 <?php 
-foreach($mng as $k=>$v){
-	if($k==$deptid){
-		print "<option value=".$k." selected>".$v."</option>";
-	} else {
-		print "<option value=".$k.">".$v."</option>";
+foreach($mng2 as $k=>$v){
+		if($empid!=$k){
+			if($mng == $k){
+				print "<option value=".$k." selected>".$k."</option>";
+			}else{
+			print "<option value=".$k.">".$k."</option>";
+		
 	}
 }
+}
 ?>
+
+
 </select>
 <br>
-<input type="submit" value="edit" onclick="a()">
-<input type="button" value="delete">
+<input type="submit" value="edit" >
+<input type="button" value="delete" onclick="a()">
 </form>
 </body>
 </html>
