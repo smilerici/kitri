@@ -7,7 +7,7 @@ $sql = "select * from member where id='". $id ."'";
 // $sql = "select * from member where id='".$id."' and pwd='".$pwd."'";
 $result = $conn->query( $sql );
 $cnt = $result->rowCount ();
-if ($cnt >= 0) {
+if ($cnt >= 1) {
 	$row = $result->fetch ( PDO::FETCH_ASSOC );
 	if ($pwd == $row ['pwd']) {
 		session_start ();

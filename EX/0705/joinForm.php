@@ -1,3 +1,18 @@
+<?php 
+require_once 'dbconnect.php';
+$sql = "select * from hobby";
+$result = $conn->query($sql);
+$cnt = $result->rowCount();
+$arr = array();
+if($cnt>=1){
+	while($row = $result->fetch(PDO::FETCH_ASSOC)){
+		$k = $row['id'];
+		$v = $row['name'];
+		$arr[$k] = $v;
+	}
+}
+$conn = null;
+?>
 <html>
 <head>
 	<script type="text/javascript">
@@ -31,12 +46,19 @@ pwd(필수) : <input type="text" name="pwd"><br>
 name(필수) : <input type="text" name="name"><br>
 email(필수) : <input type="text" name="email"><br>
 취미 : 
-<input type="checkbox" name="hobby[]" value="1">운동
-<input type="checkbox" name="hobby[]" value="2">영화
-<input type="checkbox" name="hobby[]" value="3">음악
-<input type="checkbox" name="hobby[]" value="4">쇼핑
-<input type="checkbox" name="hobby[]" value="5">여행<br>
-가입인사 : 
+<?php 
+foreach($arr as $k=>$v){
+	if($k==1){
+		$opt = "checked";
+	}
+	print "<input type='checkbox' name='hobby[]' value=".$k." ".$opt.">".$v;
+	if($k==1){
+		$opt="";
+	}
+}
+?>
+
+<br>가입인사 : 
 <textarea rows="5" cols="45" name="msg"></textarea><br>
 <input type="button" value="가입" onclick="a()">
 <input type="reset" value="취소">

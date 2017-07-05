@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(isset($_SESSION['id'])){
 	print $_SESSION['id']."님 로그인중<br>";
 }else {
