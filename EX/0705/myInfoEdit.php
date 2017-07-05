@@ -1,18 +1,18 @@
 <?php
 require_once 'dbconnect.php';
-session_start();
-$id=$_SESSION['id'];
+
+$id=$_POST['id'];
 $pwd = $_POST['pwd'];
-$name = $_POST['name'];
 $email = $_POST['email'];
-$hobby=array();
-$hobby = explode(",",$_POST['hobby']);
+$hobby = implode(",",$_POST['hobby']);
+$msg="";
+if(isset($_POST['msg'])){	
 $msg=$_POST['msg'];
+}
 
-$sql = "update member set pwd='".$pwd."', name='".$name."', email='".$email."', 
-	hobby='".$hobby."', msg='".$msg."'";
-
+$sql = "update member set pwd='".$pwd."', email='".$email."', 
+	hobby='".$hobby."', msg='".$msg."' where id='".$id."'";
 $conn->exec($sql);
 $conn=null;
-header("Location:main.php");
+header('Location:main.php');
 ?>

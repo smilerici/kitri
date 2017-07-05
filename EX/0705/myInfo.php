@@ -66,7 +66,7 @@ foreach($hobby as $k=>$v){
 ?>
 <br>가입인사 : <br>
 <textarea rows="5" cols="45" name="msg"><?php print $msg?>"</textarea><br>
-<input type="button" value="정보수정" >
+<input type="submit" value="정보수정" >
 
 </form>
 </body>
