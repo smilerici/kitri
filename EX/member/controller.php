@@ -6,6 +6,7 @@ class MemberController{
 	private $action;
 	private $data;
 	private $view;
+	private $m;
 	
 	public function __construct($action){
 		$this->hService = new HobbyService();
@@ -13,47 +14,85 @@ class MemberController{
 		$this->action = $action;
 	}
 	public function run(){
-		switch ($this->action){
+		switch($this->action){
 			case "join":
 				$this->join();
 				break;
 			case "login":
-				$this->login($_POST['id'], $_POST['pwd']);
+				$this->login();
 				break;
 			case "editInfo":
+				$this->editInfo();
 				break;
 			case "myInfo":
+				$this->myInfo();
 				break;
 			case "logout":
+				$this->logout();
 				break;
 			case "out":
+				$this->out();
 				break;
 			case "joinForm":
-				$this->hobbyList();
+				$this->joinForm();
 				break;
 		}
 		require 'view/'.$this->view;
 	}
 	public function join(){
 		$str = implode(",", $_POST['hobby']);
-		$m = new Member($_POST['id'],$_POST['pwd'],$_POST['name'],
-				$_POST['email'],$str,$_POST['msg']);
+		$m = new Member($_POST['id'],$_POST['pwd'],$_POST['name'],$_POST['email'],$str,$_POST['msg']);
 		$this->mService->join($m);
 		$this->view = "loginForm.php";
 	}
 	public function hobbyList(){
 		$this->data = $this->hService->getAll();
+	}
+	public function joinForm(){
+		$this->hobbyList();
 		$this->view = "joinForm.php";
 	}
-	
-	public function login($id,$pwd){
-		$this->data = $this->mService->login($id, $pwd);
-		if($this->data == 3){
-			$this->view="main.php";
-		}else {
-			$thiw->view="loginForm.php";
+	public function login(){
+		$code = $this->mService->login($_POST['id'], $_POST['pwd']);
+		switch($code){
+			case 1:
+			$this->data = "없는 아이디";
+			$this->view = 'loginForm.php';
+			break;
+			case 2:
+			$this->data = "잘못된 패스워드";
+			$this->view = 'loginForm.php';
+			break;
+			case 3:
+			$this->data = "로그인 성공";
+			$this->view = 'main.php';
+			break;
+		
 		}
+	}
+	
+	public function myInfo(){
+		$id = $_GET['id'];
+		$this->m = $this->mService->getMember($id);
+		$this->hobbyList();
+		$this->view = 'editForm.php';
+		
+	}
+	public function logout(){
+		$this->mService->logout();
+		$this->view="loginForm.php";
+	}
+	
+	public function out(){
+		$this->mService->out();
+		$this->view="loginForm.php";
+	}
+	
+	public function editInfo(){
+		$str = implode(",", $_POST['hobby']);
+		$m = new Member($_POST['id'],$_POST['pwd'],"",$_POST['email'],$str,$_POST['msg']);
+		$this->mService->editInfo($m);
+		$this->view ="main.php";
 		
 	}
 }
-?>

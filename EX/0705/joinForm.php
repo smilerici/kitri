@@ -40,7 +40,7 @@ function a(){
 </head>
 <body>
 <h3>회원가입</h3>
-<form action="join.php" method="post" name="f">
+<form action="/web1/EX/member/view/join.php" method="post" name="f">
 id(필수) : <input type="text" name="id"><br>
 pwd(필수) : <input type="text" name="pwd"><br>
 name(필수) : <input type="text" name="name"><br>

@@ -41,7 +41,7 @@ $conn=null;
 
 </head>
 <body>
-<h3>회원가입</h3>
+<h3>내 정보</h3>
 <form action="myInfoEdit.php" method="post" name="f">
 id : <input type="text" name="id" value="<?php print $id?>" readonly><br>
 pwd : <input type="text" name="pwd" value="<?php print $pwd?>"><br>

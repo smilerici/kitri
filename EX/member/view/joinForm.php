@@ -1,7 +1,6 @@
-
 <html>
-  <head>
-    <script type="text/javascript">
+<head>
+<script>
 function a(){
 	if(f.id.value==null || f.id.value==''){
 		alert("id는 필수사항입니다.");
@@ -12,7 +11,7 @@ function a(){
 		f.pwd.focus();
 	}
 	if(f.name.value==null || f.name.value==''){
-		alert("name는 필수사항입니다.");
+		alert("name은 필수사항입니다.");
 		f.name.focus();
 	}
 	if(f.email.value==null || f.email.value==''){
@@ -20,35 +19,32 @@ function a(){
 		f.email.focus();
 	}
 	f.submit();
-	
 }
-    </script>
-  </head>
-  <body>
+	</script>
+</head>
+<body>
 <h3>회원가입</h3>
-<form action="index.php?action=join" method="post" name="f">
-id(필수):<input type="text" name="id"><br>
-pwd(필수):<input type="text" name="pwd"><br>
-name(필수):<input type="text" name="name"><br>
-email(필수):<input type="text" name="email"><br>
+<form name = "f" action = "/web1/EX/member/index.php?action=join" method = "post">
+id: <input type="text" name="id"><br>
+pwd: <input type="text" name="pwd"><br>
+name: <input type="text" name="name"><br>
+email: <input type="text" name="email"><br>
 취미:
-<?php
+<?php 
 $opt = "";
-for($i=0 ; $i< count($this->data); $i++){
+for($i = 0 ;$i<count($this->data);$i++){
 	if($i==0){
 		$opt = "checked";
 	}
-	print "<input type='checkbox' name='hobby[]' value=".
-			$this->data[$i]->getId()." ".$opt.">".
-			$this->data[$i]->getName();
+	print "<input type='checkbox' name='hobby[]' value=".$this->data[$i]->getId()." ".$opt.">".$this->data[$i]->getName();
 	if($i==0){
-		$opt = "";
+		$opt= "";
 	}
 }
-?>
 
-<br>가입인사:
-<textarea cols="45" rows="5" name="msg"></textarea><br>
+?>
+<br>가입인사:<br>
+<textarea name="msg"  rows="6" cols="45"></textarea><br>
 <input type="button" value="가입" onclick="a()">
 <input type="reset" value="취소">
 </form>
