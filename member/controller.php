@@ -14,7 +14,7 @@ class MemberController{
 		$this->action = $action;
 	}
 	public function run(){
-		switch($this->action){
+		switch ($this->action){
 			case "join":
 				$this->join();
 				break;
@@ -41,7 +41,8 @@ class MemberController{
 	}
 	public function join(){
 		$str = implode(",", $_POST['hobby']);
-		$m = new Member($_POST['id'],$_POST['pwd'],$_POST['name'],$_POST['email'],$str,$_POST['msg']);
+		$m = new Member($_POST['id'],$_POST['pwd'],$_POST['name'],
+				$_POST['email'],$str,$_POST['msg']);
 		$this->mService->join($m);
 		$this->view = "loginForm.php";
 	}
@@ -53,46 +54,47 @@ class MemberController{
 		$this->view = "joinForm.php";
 	}
 	public function login(){
-		$code = $this->mService->login($_POST['id'], $_POST['pwd']);
+		$code = $this->mService->login($_POST['id'],$_POST['pwd']);
 		switch($code){
 			case 1:
-			$this->data = "없는 아이디";
-			$this->view = 'loginForm.php';
-			break;
+				$this->data = '없는 아이디';
+				$this->view = 'loginForm.php';
+				break;
 			case 2:
-			$this->data = "잘못된 패스워드";
-			$this->view = 'loginForm.php';
-			break;
+				$this->data = '잘못된 패스워드';
+				$this->view = 'loginForm.php';
+				break;
 			case 3:
-			$this->data = "로그인 성공";
-			$this->view = 'main.php';
-			break;
-		
+				$this->data = '로그인 성공';
+				$this->view = 'main.php';
+				break;
 		}
 	}
-	
 	public function myInfo(){
 		$id = $_GET['id'];
 		$this->m = $this->mService->getMember($id);
 		$this->hobbyList();
 		$this->view = 'editForm.php';
-		
-	}
-	public function logout(){
-		$this->mService->logout();
-		$this->view="loginForm.php";
-	}
-	
-	public function out(){
-		$this->mService->out();
-		$this->view="loginForm.php";
 	}
 	
 	public function editInfo(){
 		$str = implode(",", $_POST['hobby']);
-		$m = new Member($_POST['id'],$_POST['pwd'],"",$_POST['email'],$str,$_POST['msg']);
+		$m = new Member($_POST['id'],$_POST['pwd'],'',
+				$_POST['email'],$str,$_POST['msg']);
 		$this->mService->editInfo($m);
-		$this->view ="main.php";
-		
+		$this->view = "main.php";
+	}
+	public function logout(){
+		$this->mService->logout();
+		$this->view = 'loginForm.php';
+	}
+	public function out(){
+		$this->mService->out();
+		$this->view = 'loginForm.php';
 	}
 }
+?>
+
+
+
+
