@@ -11,10 +11,13 @@ function check($w){
 }
 ?>
 <html>
+<head>
+
+</head>
 <body>
 <h3>글 내용</h3>
 <a href="/web1/board/index.php?action=list">글목록으로 돌아가기</a><br>
-<form action="/web1/board/index.php?action=edit" method="post">
+<form name="f" action="/web1/board/index.php?action=edit" method="post">
 <table border=1>
 <tr>
 <th>글번호</th><td><input type="text" name="num" 
@@ -63,7 +66,7 @@ value="<?php print $this->data->getTitle();?>"
 <tr>
 <td colspan="2">
 <input type="submit" value="수정">
-<input type="button" value="삭제">
+<input type="button" name="del" value="삭제" onclick="<?php print "<a href='/web1/board/index.php?action=del'>" ?>">
 </td>
 </tr>
 <?php }?>
