@@ -15,6 +15,10 @@ class MemberController{
 	}
 	public function run(){
 		switch ($this->action){
+			case "idCheck":
+				
+				$this->idCheck();
+				break;
 			case "join":
 				$this->join();
 				break;
@@ -36,9 +40,23 @@ class MemberController{
 			case "joinForm":
 				$this->joinForm();
 				break;
+			case "idCheck":
+				$this->idCheck();
+				break;
 		}
 		require 'view/'.$this->view;
 	}
+	
+	public function idCheck(){
+		$m = $this->mService->getMember($_REQUEST['id']);
+		if($m==null){
+			$this->data = "true";
+		}else{
+			$this->data = "false";
+		}
+		$this->view = "idCheck.php";
+	}
+	
 	public function join(){
 		$str = implode(",", $_POST['hobby']);
 		$m = new Member($_POST['id'],$_POST['pwd'],$_POST['name'],
@@ -92,6 +110,7 @@ class MemberController{
 		$this->mService->out();
 		$this->view = 'loginForm.php';
 	}
+	
 }
 ?>
 

@@ -12,7 +12,13 @@ function check($w){
 ?>
 <html>
 <head>
-
+<script>
+function a(){
+	f.action="/web1/board/index.php?action=del";
+	f.submit();
+	f.action="/web1/board/index.php?action=edit";	
+}
+</script>
 </head>
 <body>
 <h3>글 내용</h3>
@@ -66,7 +72,7 @@ value="<?php print $this->data->getTitle();?>"
 <tr>
 <td colspan="2">
 <input type="submit" value="수정">
-<input type="button" name="del" value="삭제" onclick="<?php print "<a href='/web1/board/index.php?action=del'>" ?>">
+<input type="button" name="del" value="삭제" onclick="a()">
 </td>
 </tr>
 <?php }?>

@@ -35,6 +35,7 @@ class BoardController{
 				$this->detail();
 				break;
 			case "edit":
+				$this->edit();
 				return;
 			case "del":
 				$this->delete();
@@ -76,10 +77,18 @@ class BoardController{
 	}
 	
 	public function delete(){
-		$this->bService->delArticle($_GET['num']);
+		$this->bService->delArticle($_POST['num']);
 		$this->action = "list";
 		$this->run();
 		$this->view = "list.php";
+		
+	}
+	
+	public function edit(){
+		$a = new Article($_POST['num'], '', $_POST['title'], $_POST['content'], $_POST['writer'], $_POST['cate']);
+		$this->bService->editArticle($a);
+		$this->action="list";
+		$this->run();
 	}
 }
 ?>
