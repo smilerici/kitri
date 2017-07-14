@@ -17,7 +17,7 @@ request("post", uri, callback, param);
 
 }
 function aResult(){
-	if(httpReuest.readyState ==4){
+	if(httpReuest.readyState == 4){
 		if(httpRequest.status == 200){
 			var txt=httpRequest.responseText;
 			var reply = eval('('+txt+')');
@@ -27,7 +27,6 @@ function aResult(){
 				html+="content:"+reply[i].content;
 				html+="/wdate:"+reply[i].wdate;
 				html+="/writer:"+reply[i].writer+"<br>";
-				
 			}
 			listDiv.innerHTML = html;
 		}
