@@ -20,7 +20,6 @@ class Img{
 	public function getReps(){
 		return $this->reps;
 	}
-	
 	public function setId($id){
 		$this->id = $id;
 	}

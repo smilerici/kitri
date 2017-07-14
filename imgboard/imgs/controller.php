@@ -53,14 +53,14 @@ class ImgsController{
 		$this->writer = $_REQUEST['writer'];
 		$this->data = $this->service->getAll($this->writer);
 		$this->ids = $this->mService->getIds($this->writer);
-		foreach($this->data as $i){
-			$i->setReps($this->bService->getAll($i->getId));
+		foreach ($this->data as $i){
+			$i->setReps($this->bService->getAll($i->getId()));
 		}
 		$this->view = "list.php";
 	}
-	
 	public function addReply(){
-		$this->bService->addReply(new Reply(0, $_POST['img_id'], $_POST['content'], '', $_POST['writer']));
+		$this->bService->addReply(new Reply(0, $_POST['img_id'], 
+				$_POST['content'], '', $_POST['writer']));
 		$this->img_id = $_POST['img_id'];
 		$this->action = "listReply";
 		$this->run();
@@ -68,9 +68,6 @@ class ImgsController{
 	public function listReply(){
 		$this->data = $this->bService->getAll($this->img_id);
 		$this->view = "rList.php";
-	}
-	public function delReply(){
-		
 	}
 }
 
