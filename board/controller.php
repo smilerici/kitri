@@ -28,8 +28,10 @@ class BoardController{
 				$this->listByCategory();
 				break;
 			case "listByWriter":
+				$this->listByWriter();
 				break;
 			case "listByTitle":
+				$this->listByTitle();
 				break;
 			case "detail":
 				$this->detail();
@@ -38,13 +40,28 @@ class BoardController{
 				$this->edit();
 				return;
 			case "del":
-				$this->delete();
+				$this->del();
 				return;
 			case "writeForm":
 				$this->writeForm();
 				break;
+			case "article_json":
+				$this->article_json();
+				break;
 		}
 		require 'view/'.$this->view;
+	}
+	public function listByWriter(){
+		$this->data = $this->bService->getByWriter($_POST['writer']);
+		$this->view = "searchList.php";
+	}
+	public function listByTitle(){
+		$this->data = $this->bService->getByTitle($_POST['title']);
+		$this->view = "searchList.php";
+	}
+	public function article_json(){
+		$this->data = $this->bService->getByNum($_REQUEST['num']);
+		$this->view = "article_json.php";
 	}
 	public function boardList(){
 		$this->data = $this->bService->getAll();
@@ -66,6 +83,7 @@ class BoardController{
 	public function add(){
 		$a = new Article(0, '', $_POST['title'], $_POST['content'], 
 				$_POST['writer'], $_POST['cate']);
+		$a->setParent($_POST['parent']);
 		$this->bService->addArticle($a);
 		$this->action="list";
 		$this->run();
@@ -75,18 +93,15 @@ class BoardController{
 		$this->getCategory();
 		$this->view = "detail.php";
 	}
-	
-	public function delete(){
-		$this->bService->delArticle($_POST['num']);
-		$this->action = "list";
-		$this->run();
-		$this->view = "list.php";
-		
-	}
-	
 	public function edit(){
-		$a = new Article($_POST['num'], '', $_POST['title'], $_POST['content'], $_POST['writer'], $_POST['cate']);
+		$a = new Article($_POST['num'], '', $_POST['title'],
+				$_POST['content'],'', $_POST['cate']);
 		$this->bService->editArticle($a);
+		$this->action="list";
+		$this->run();
+	}
+	public function del(){
+		$this->bService->delArticle($_GET['num']);
 		$this->action="list";
 		$this->run();
 	}

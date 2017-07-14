@@ -6,6 +6,8 @@ class Article{
 	private $content;
 	private $writer;
 	private $category;
+	private $parent;
+	private $reps;
 	
 	public function __construct($num, $wdate, $title, $content, $writer, $category){
 		$this->num = $num;
@@ -14,6 +16,19 @@ class Article{
 		$this->content = $content;
 		$this->writer = $writer;
 		$this->category = $category;
+	}
+	public function setParent($parent){
+		$this->parent = $parent;
+	}
+	public function getParent(){
+		return $this->parent;
+	}
+	public function setReps($arr){
+		$this->reps = $arr;
+	}
+	
+	public function getReps(){
+		return $this->reps;
 	}
 	
 	public function setNum($num){
