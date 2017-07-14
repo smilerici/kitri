@@ -26,7 +26,7 @@ class ReplyController{
 				break;
 			case "edit":
 				$this->edit();
-				return;
+				break;
 			case "del":
 				$this->del();
 				break;
@@ -53,7 +53,11 @@ class ReplyController{
 		$this->view = "list.php";
 	}
 	public function edit(){
-		
+		$this->num = $_POST['num'];
+		$this->service->editReply(new Reply($this->num, '', 
+				'', $_POST['content'], ''));
+		$this->data = $this->service->getReply($this->num);
+		$this->view = "reply.php";
 	}
 	public function del(){
 		$this->num = $_REQUEST['num'];

@@ -87,6 +87,26 @@ class MemberDao {
 		$this->disconnect();
 		return $m;
 	}
+	public function selectAll($id) {
+		$ids = array();
+		$this->connect();
+		try {
+			$sql = "select id from member where id<>?";
+			$stm = $this->conn->prepare ( $sql );
+			$stm->bindValue ( 1, $id );
+			$stm->execute ();
+			$cnt = $stm->rowCount();
+			if($cnt > 0){
+				while($row = $stm->fetch(PDO::FETCH_ASSOC)){
+					$ids[] = $row['id'];
+				}
+			}
+		} catch ( PDOException $e ) {
+			print $e->getMessage ();
+		}
+		$this->disconnect();
+		return $ids;
+	}
 	public function update($m) {
 		$this->connect();
 		try {
