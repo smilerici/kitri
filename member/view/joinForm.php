@@ -15,16 +15,17 @@ function b(){
 function c(){
 	if(httpRequest.readyState == 4){
 	    if(httpRequest.status == 200){
-		    var str="";
+		    var str = "";
 			var txt=httpRequest.responseText;
 			var res = eval("("+txt+")");
-			if(res.flag =="false"){
-				str = "중복된 아이디";
+			if(res.flag=="false"){
+				str = "중복된아이디";
 				idCheckFlag = false;
-				}else if(res.flag=="true"){
+			}else if(res.flag=="true"){
 				str = "사용가능한 아이디";
 				idCheckFlag = true;
-				}
+				
+			}
 			
 			var myDiv = document.getElementById("idDiv");
 			myDiv.innerHTML = str;
@@ -93,4 +94,3 @@ for($i = 0; $i < count ( $this->data ); $i ++) {
 	</form>
 </body>
 </html>
-

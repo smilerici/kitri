@@ -32,21 +32,9 @@ class Controller{
 			case "del":
 				$this->del();
 				return;
-			case "download":
-				$this->download();
-				break;
 		}
 		require $this->view;
 	}
-	public function download(){
-		$fname = $GET['fname'];
-			$fname = $_GET['fname'];
-			header("Content-Disposition:attachment;filename=contents/".$fname);
-			header("Content-type:application/octet-stream;name=".$fname);
-			$result = file_get_contents("contents/".$fname);
-			print $result;
-	}
-	
 	
 	public function flist(){
 		$this->data = $this->myfile->flist(1);
@@ -79,7 +67,7 @@ class Controller{
 		}
 	}
 	public function del(){
-		$this->myfile->setFileName($_GET['fname']);
+		$this->myfile->setFileName($_POST['fname']);
 		$this->myfile->delete();
 		$this->action = "list";
 		$this->run();
@@ -88,7 +76,6 @@ class Controller{
 		$this->data = $this->myfile->flist(2);
 		$this->view = "write.php";
 	}
-	
 }
 ?>
 

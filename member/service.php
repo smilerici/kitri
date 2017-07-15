@@ -55,6 +55,10 @@ class MemberService{
 	public function getMember($id){
 		return $this->dao->select($id);
 	}
+	
+	public function getIds($id){
+		return $this->dao->selectAll($id);
+	}
 }
 
 ?>

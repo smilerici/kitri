@@ -1,0 +1,39 @@
+테이블명 board
+num/글번호 (int primary key, autoincrement)
+wdate/날짜(date) not null
+title/제목 not null
+content/내용
+writer/작성자(member(id)) FK not null
+category/ 카테고리(1~5) hobby(id) FK not null
+================================
+DTO 
+class Article{
+num
+wdate
+title
+content
+writer
+category
+}
+===============================
+DAO
+클래스명:BoardDao
+메서드 :
+insert($article)//글 저장
+selectByNum($num)//글번호로 검색하여 글 객체 하나 반환
+selectByWriter($writer)//작성자로 검색하여 글 객체를 배열에 담아 반환
+selectByCategory($category)//카테고리로 글검색하여 배열에 담아 반환
+selectByTitle($title)//제목으로 검색하여 배열에 담아 반환
+selectAll()//글 전체 검색
+update($article)//제목, 내용, 카테고리를 수정(num)
+delete($num)//글삭제
+
+
+
+
+
+
+
+
+
+

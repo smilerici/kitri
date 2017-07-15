@@ -20,12 +20,13 @@ class BoardDao {
 	public function insert($b) {
 		$this->connect ();
 		try {
-			$sql = "insert into board values(null,now(),?,?,?,?)";
+			$sql = "insert into board values(null,now(),?,?,?,?,?)";
 			$stm = $this->conn->prepare ( $sql );
 			$stm->bindValue ( 1, $b->getTitle () );
 			$stm->bindValue ( 2, $b->getContent () );
 			$stm->bindValue ( 3, $b->getWriter () );
 			$stm->bindValue ( 4, $b->getCategory () );
+			$stm->bindValue ( 5, $b->getParent () );
 			$stm->execute ();
 		} catch ( PDOException $e ) {
 			print $e->getMessage ();
@@ -123,7 +124,7 @@ class BoardDao {
 		$a = array();
 		$this->connect ();
 		try {
-			$sql = "select * from board";
+			$sql = "select * from board where parent=0";
 			$stm = $this->conn->prepare ( $sql );
 			$stm->execute ();
 			$cnt = $stm->rowCount ();
@@ -132,6 +133,28 @@ class BoardDao {
 					$a[] = new Article ( $row ['num'], $row ['wdate'],
 					$row ['title'], $row ['content'], $row ['writer'],
 							$row ['category'] );
+				}
+			}
+		} catch ( PDOException $e ) {
+			print $e->getMessage ();
+		}
+		$this->disconnect ();
+		return $a;
+	}
+	public function selectByParent($parent){
+		$a = array();
+		$this->connect ();
+		try {
+			$sql = "select * from board where parent=?";
+			$stm = $this->conn->prepare ( $sql );
+			$stm->bindValue ( 1, $parent);
+			$stm->execute ();
+			$cnt = $stm->rowCount ();
+			if ($cnt > 0) {
+				while ( $row = $stm->fetch ( PDO::FETCH_ASSOC ) ) {
+					$a[] = new Article ( $row ['num'], $row ['wdate'],
+					$row ['title'], $row ['content'], $row ['writer'],
+					$row ['category'] );
 				}
 			}
 		} catch ( PDOException $e ) {

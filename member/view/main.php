@@ -15,3 +15,4 @@ if(isset($_SESSION['id'])){
 <a href="/web1/member/index.php?action=logout">로그아웃</a><br>
 <a href="/web1/member/index.php?action=out">탈퇴</a><br>
 <a href="/web1/board/index.php?action=list">게시판</a><br>
+<a href="/web1/imgboard/imgs/index.php?action=list&writer=<?php print $_SESSION['id']?>">이미지 게시판</a><br>

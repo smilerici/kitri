@@ -12,18 +12,21 @@ function check($w){
 ?>
 <html>
 <head>
-<script>
-function a(){
-	f.action="/web1/board/index.php?action=del";
-	f.submit();
-	f.action="/web1/board/index.php?action=edit";	
+<script type="text/javascript">
+function del(num){
+	var flag = confirm("정말 삭제하시겠습니까?");
+	if(flag){
+		location.href="/web1/board/index.php?action=del&num="+num;
+	}else{
+		alert("삭제취소");
+	}
 }
 </script>
 </head>
 <body>
 <h3>글 내용</h3>
 <a href="/web1/board/index.php?action=list">글목록으로 돌아가기</a><br>
-<form name="f" action="/web1/board/index.php?action=edit" method="post">
+<form action="/web1/board/index.php?action=edit" method="post">
 <table border=1>
 <tr>
 <th>글번호</th><td><input type="text" name="num" 
@@ -72,11 +75,30 @@ value="<?php print $this->data->getTitle();?>"
 <tr>
 <td colspan="2">
 <input type="submit" value="수정">
-<input type="button" name="del" value="삭제" onclick="a()">
+<input type="button" value="삭제" onclick="del(<?php print $this->data->getNum()?>)">
 </td>
 </tr>
 <?php }?>
 </table>
 </form>
+<h3>댓글작성</h3>
+<form action="/web1/board/index.php?action=add" method="post">
+<input type="text" name="content">
+<input type="submit" value="작성">
+<input type="hidden" name="title" 
+value="--><?php print $this->data->getTitle()?>">
+<input type="hidden" name="writer" 
+value="<?php print $_SESSION['id']?>">
+<input type="hidden" name="parent" 
+value="<?php print $this->data->getNum()?>">
+<input type="hidden" name="cate" 
+value="<?php print $this->data->getCategory()?>">
+</form>
 </body>
 </html>
+
+
+
+
+
+

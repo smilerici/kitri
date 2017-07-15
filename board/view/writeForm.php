@@ -35,6 +35,7 @@ value="<?php print $_SESSION['id']?>" readonly></td>
 <td colspan="2"><input type="submit" value="저장"></td>
 </tr>
 </table>
+<input type="hidden" name="parent" value="0">
 </form>
 </body>
 </html>
