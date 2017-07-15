@@ -31,7 +31,7 @@ function makeDiv(r){
 				+r.content+'</td></tr>';
 	html += '<tr><th>작성자</th><td>'+r.writer+'</td><th>작성일</th><td>'
 			+r.wdate+'</td></tr>';
-	html += '<tr><td colspan="4"><input type="button" value="edit">';
+	html += '<tr><td colspan="4"><input type="button" value="edit" onclick="viewEditForm('+r.num+', \''+r.content+'\')">';
 	html += '<input type="button" value="del" onclick="del('+r.num
 			+')"></td></tr></table>';
 	item.innerHTML = html;
@@ -86,7 +86,42 @@ function delResult(){
 	    }
 	}
 }
-
+function viewEditForm(num, content){
+	var editDiv = document.getElementById("editDiv");
+	var parentDiv = document.getElementById("r_"+num);
+	editDiv.parentNode.removeChild(editDiv);
+	parentDiv.appendChild(editDiv);
+	f2.num.value = num;
+	f2.content.value = content;
+	editDiv.style.display = '';
+}
+function cancel(){
+	var editDiv = document.getElementById("editDiv");
+	var bodyNode = document.getElementsByTagName("body").item(0);
+	editDiv.parentNode.removeChild(editDiv);
+	bodyNode.appendChild(editDiv);
+	editDiv.style.display = 'none';
+}
+function edit(){
+	var param = "num="+f2.num.value;
+	param += "&content="+f2.content.value;
+	var uri = "/web1/reply/index.php?action=edit";
+	var callback = editResult;
+	request("post", uri, callback, param);
+	cancel();
+}
+function editResult(){
+	if(httpRequest.readyState == 4){
+	    if(httpRequest.status == 200){
+			var txt=httpRequest.responseText;
+			var res = eval('('+txt+')');
+			var newDiv = makeDiv(res);
+			var oldDiv = document.getElementById("r_"+res.num);
+			var listDiv = document.getElementById("list");
+			listDiv.replaceChild(newDiv, oldDiv);
+	    }
+	}
+}
 </script>
 </head>
 <body>
@@ -99,5 +134,13 @@ function delResult(){
 <input type="button" value="글작성" onclick="add()">
 </form>
 <div id="list"></div>
+<div id="editDiv" style="display: none">
+<form action="" name="f2" method="post">
+<input type="hidden" name="num">
+내용:<input type="text" name="content"><br>
+<input type="button" value="저장" onclick="edit()">
+<input type="button" value="취소" onclick="cancel()">
+</form>
+</div>
 </body>
 </html>
